@@ -5,6 +5,7 @@
 #include <string>
 #include <iostream>
 using std::string;
+using std::endl;
 
 string  longestPalindromDP(string s)
 {
@@ -42,10 +43,50 @@ string  longestPalindromDP(string s)
 
 }
 
+string expendAroundCenter(string s, int c1, int c2)
+{
+	int n = s.length();
+	int l = c1;
+	int r = c2;
+	while (l>=0 && r<=n-1 && s[l]==s[r])
+	{
+		l--;
+		r++;
+	}
+	return s.substr(l+1,r-1-l);
+}
+
+
+string longsetPalindromeSimple(string s)
+{
+	int len = s.length();
+	if (len == 0) return "";
+	string longest = s.substr(0,1);
+	for (int i = 0; i < len-1; i++)
+	{
+		string p1 = expendAroundCenter(s,i,i);
+		if (p1.length() > longest.length())
+		{
+			longest = p1;
+		}
+		string p2 = expendAroundCenter(s,i,i+1);
+		if (p2.length() > longest.length())
+		{
+			longest = p2;
+		}
+	}
+	return longest;
+}
+
+
+
+
 int _tmain(int argc, _TCHAR* argv[])
 {
 	string str = "abccbd";
 	std::cout<<longestPalindromDP(str);
+	std::cout<<endl;
+	std::cout<<longsetPalindromeSimple(str);
 	return 0;
 }
 
